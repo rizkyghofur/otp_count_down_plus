@@ -1,10 +1,10 @@
-name: otp_count_down
-description: A new dart package for easy implementation of OTP Count Down.
-version: 1.0.6
-homepage: https://github.com/hiteshgarg002/otp_count_down
+name: otp_count_down_plus
+description: A fork of otp_count_down package. A new dart package for easy implementation of OTP Count Down.
+version: 2.0.0
+homepage: https://github.com/rizkyghofur/otp_count_down_plus
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.17.0 <4.0.0"
 
 dependencies:
   flutter:
