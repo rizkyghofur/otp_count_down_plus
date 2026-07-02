@@ -8,7 +8,6 @@
 * Added **Custom Formatter** (`formatter`) and **Custom Interval** (`interval`).
 * Added **Background Time Sync** via absolute system time & `WidgetsBindingObserver`.
 * Added **Cooldown Backoff support** (`restartWithBackoff()`) with custom or linear strategies.
-* Added **Haptic Feedback support** (ticking impacts and completion vibrations).
 * Added **Persistence Hook** (`onTick` callback) returning remaining milliseconds.
 * Added **Milestone Callbacks** (`milestones` map) to trigger events at specific durations.
 * Added immediate timer invocation to improve UI/UX responsiveness.

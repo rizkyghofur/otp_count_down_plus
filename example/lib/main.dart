@@ -25,7 +25,6 @@ class _MyHomePageState extends State<MyHomePage> {
   late OTPCountDown _otpCountDown;
   final int _otpTimeInMS = 1000 * 30; // 30 seconds for quick testing
   String _milestoneMessage = "No milestones reached yet";
-  bool _enableHaptics = true;
   bool _isLoading = false;
 
   @override
@@ -37,7 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void _startCountDown() {
     _otpCountDown = OTPCountDown.startOTPTimer(
       timeInMS: _otpTimeInMS,
-      enableHaptics: _enableHaptics,
       onFinish: () {
         debugPrint("Count down finished!");
       },
@@ -112,18 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 30),
-                SwitchListTile(
-                  title: const Text("Enable Haptic Feedback (Ticking)"),
-                  value: _enableHaptics,
-                  onChanged: (val) {
-                    setState(() {
-                      _enableHaptics = val;
-                      _otpCountDown.dispose();
-                      _startCountDown();
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

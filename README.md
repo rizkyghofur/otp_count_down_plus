@@ -2,12 +2,11 @@
 
 Easily implement a countdown timer in Flutter applications (Forked from `otp_count_down`). 
 
-This package is a **pure headless** countdown utility supporting Dart 3 (SDK `>=2.17.0 <4.0.0`) that handles timer synchronization, lifecycle states, haptics, and backoff mathematical models, while leaving 100% of the UI design to the developer.
+This package is a **pure headless** countdown utility supporting Dart 3 (SDK `>=2.17.0 <4.0.0`) that handles timer synchronization, app lifecycle states, and backoff mathematical models, while leaving 100% of the UI design to the developer.
 
 ## Features
 - **Background Time Sync**: Automatically synchronizes remaining time when the app returns from background using system time differentials and `WidgetsBindingObserver`.
 - **Cooldown Backoff**: Support for exponential or custom backoff strategies when resending OTPs (e.g. attempt 1 is 30s, attempt 2 is 60s...).
-- **Haptic Ticking**: Optional ticking with a haptic click every second, and vibrate when the countdown completes.
 - **Persistence Hook (`onTick`)**: A callback returning the exact remaining milliseconds on every tick.
 - **Milestone Callbacks**: Trigger events at specific countdown milestones (e.g. at 5 seconds remaining).
 - **Streams support**: Expose `countDownStream` and `remainingTimeStream` for reactive state management.
@@ -70,16 +69,7 @@ _otpCountDown.restartWithBackoff(
 );
 ```
 
-### 4. Haptic Feedback
-Simply toggle `enableHaptics: true` to enable ticking and completion vibration:
-```dart
-_otpCountDown = OTPCountDown.startOTPTimer(
-    timeInMS: 1000 * 30,
-    enableHaptics: true,
-);
-```
-
-### 5. Persistence Hook & Milestones
+### 4. Persistence Hook & Milestones
 ```dart
 _otpCountDown = OTPCountDown.startOTPTimer(
     timeInMS: _otpTimeInMS,
@@ -96,7 +86,7 @@ _otpCountDown = OTPCountDown.startOTPTimer(
 );
 ```
 
-### 6. Controls (Pause, Resume, Restart, Dispose)
+### 5. Controls (Pause, Resume, Restart, Dispose)
 ```dart
 // Pause the timer (stops ticking and freezes remaining duration)
 _otpCountDown.pause();

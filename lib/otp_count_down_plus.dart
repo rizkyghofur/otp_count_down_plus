@@ -1,13 +1,12 @@
 library otp_count_down_plus;
 
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 /// A utility class to easily implement countdown timers in Flutter/Dart applications.
 ///
 /// It supports streams, pause/resume/restart controls, custom formatters,
-/// custom tick intervals, milestone events, haptic feedback, backoff cooldowns, 
+/// custom tick intervals, milestone events, backoff cooldowns, 
 /// and automatic background time synchronization.
 class OTPCountDown with WidgetsBindingObserver {
   // Stream Controllers
@@ -24,7 +23,6 @@ class OTPCountDown with WidgetsBindingObserver {
   int _remainingTimeInMS = 0;
   bool _isPaused = false;
   int _attemptCount = 0;
-  bool _enableHaptics = false;
 
   late DateTime _lastTickTime;
 
@@ -61,7 +59,6 @@ class OTPCountDown with WidgetsBindingObserver {
   /// * [interval] : Duration of each timer tick (defaults to 1 second).
   /// * [onTick] : Callback that fires on every tick with the raw remaining milliseconds.
   /// * [milestones] : Map of milliseconds duration to custom callbacks (triggered once when passed).
-  /// * [enableHaptics] : Play micro-vibrations on ticks and a standard vibration on completion (defaults to false).
   OTPCountDown.startOTPTimer({
     required int timeInMS,
     void Function(String countDown)? currentCountDown,
@@ -70,15 +67,13 @@ class OTPCountDown with WidgetsBindingObserver {
     Duration interval = const Duration(seconds: 1),
     void Function(int remainingTimeInMS)? onTick,
     Map<int, VoidCallback>? milestones,
-    bool enableHaptics = false,
   })  : _remainingTimeInMS = timeInMS,
         _currentCountDownCallback = currentCountDown,
         _onFinishCallback = onFinish,
         _interval = interval,
         _formatter = formatter ?? _formatTime,
         _onTick = onTick,
-        _milestones = milestones,
-        _enableHaptics = enableHaptics {
+        _milestones = milestones {
     WidgetsBinding.instance.addObserver(this);
     _startTimer(emitInitial: true);
   }
@@ -93,9 +88,6 @@ class OTPCountDown with WidgetsBindingObserver {
 
     if (_remainingTimeInMS <= 0) {
       _onFinishCallback?.call();
-      if (_enableHaptics) {
-        HapticFeedback.vibrate();
-      }
       return;
     }
 
@@ -108,15 +100,8 @@ class OTPCountDown with WidgetsBindingObserver {
 
       _triggerUpdate();
 
-      if (_enableHaptics && _remainingTimeInMS > 0) {
-        HapticFeedback.selectionClick();
-      }
-
       if (_remainingTimeInMS <= 0) {
         _onFinishCallback?.call();
-        if (_enableHaptics) {
-          HapticFeedback.vibrate();
-        }
         timer.cancel();
       }
     });
@@ -158,9 +143,6 @@ class OTPCountDown with WidgetsBindingObserver {
 
           if (_remainingTimeInMS <= 0) {
             _onFinishCallback?.call();
-            if (_enableHaptics) {
-              HapticFeedback.vibrate();
-            }
             _timer?.cancel();
           }
         }
